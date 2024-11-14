@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package comments;
 
-option go_package = "evgMdr.sso.v1;commentsv1";
+option go_package = "evgMdr.comments.v1;commentsv1";
 
 import "google/protobuf/timestamp.proto";
 
