@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package posts;
+
+option go_package = "evgMdr.posts.v1;postsv1";
+
+import "google/protobuf/timestamp.proto";
+
+service Posts {
+  rpc GetPost (GetPostDto) returns (PostDto);
+  rpc CreatePost (CreatePostDto) returns (PostDto);
+  rpc GetPosts (GetPostsDto) returns (PostsResponseDto);
+  rpc PatchPost (PatchRequestDto) returns (PostDto);
+  rpc PutPost (PutRequestDto) returns (PostDto);
+  rpc DeletePost (DeleteRequestDto) returns (DeleteResponseDto);
+}
+
+message PostDto {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string author_id = 4;
+  string image_url = 5;
+  google.protobuf.Timestamp createdAt = 6;
+  google.protobuf.Timestamp updatedAt = 7;
+}
+
+message GetPostDto {
+  string id = 1;
+}
+
+message CreatePostDto {
+  string title = 1;
+  string content = 2;
+  string author_id = 3;
+  string image_url = 4;
+}
+
+message GetPostsDto {
+  string filter = 1;
+  int32 take = 2;
+  int32 skip = 3;
+}
+
+message PostsResponseDto {
+  repeated PostDto posts = 1;
+}
+
+message PatchRequestDto {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string image_url = 4;
+}
+
+message PutRequestDto {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string author_id = 4;
+  string image_url = 5;
+}
+
+message DeleteRequestDto {
+  string id = 1;
+}
+
+message DeleteResponseDto {
+  string id = 1;
+  bool deleted = 2;
+}
