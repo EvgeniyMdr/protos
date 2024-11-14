@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package comments;
+
+option go_package = "evgMdr.sso.v1;commentsv1";
+
+import "google/protobuf/timestamp.proto";
+
+service Comments {
+  rpc CreateComment (CreateCommentDto) returns (CommentDto);
+  rpc GetComments (GetCommentsDto) returns (CommentsResponse);
+  rpc GetChildComments (GetChildCommentsDto) returns (CommentsResponse);
+  rpc DeleteComment (DeleteCommentDto) returns (DeleteCommentResponse);
+  rpc UpdateComment (UpdateCommentDto) returns (CommentDto);
+}
+
+message CreateCommentDto {
+  string post_id = 1;        // Идентификатор поста
+  string author_id = 2;      // Идентификатор автора комментария
+  string content = 3;        // Содержимое комментария
+  string parent_id = 4;      // Идентификатор родительского комментария, если это ответ
+}
+
+message CommentDto {
+  string id = 1;             // Идентификатор комментария
+  string post_id = 2;        // Идентификатор поста
+  string author_id = 3;      // Идентификатор автора комментария
+  string content = 4;        // Текст комментария
+  google.protobuf.Timestamp createdAt = 5;  // Время создания комментария
+  google.protobuf.Timestamp updatedAt = 6;  // Время обновления комментария
+  string parent_id = 7;      // Идентификатор родительского комментария
+  int32 child_count = 8;     // Количество дочерних комментариев
+}
+
+message GetCommentsDto {
+  string post_id = 1;        // Идентификатор поста для извлечения комментариев
+  int32 take = 2;            // Сколько комментариев вернуть
+  int32 skip = 3;            // Сколько комментариев пропустить
+}
+
+message GetChildCommentsDto {
+  string comment_id = 1;     // Идентификатор комментария, для которого получаем дочерние комментарии
+  int32 take = 2;            // Сколько дочерних комментариев вернуть
+  int32 skip = 3;            // Сколько дочерних комментариев пропустить
+}
+
+message CommentsResponse {
+  repeated CommentDto comments = 1;  // Список комментариев
+}
+
+message DeleteCommentDto {
+  string comment_id = 1;     // Идентификатор комментария для удаления
+  string user_id = 2;        // Идентификатор пользователя, выполняющего удаление, для проверки прав
+}
+
+message DeleteCommentResponse {
+  bool success = 1;          // Успешность операции удаления
+  string message = 2;        // Сообщение о результате операции
+}
+
+message UpdateCommentDto {
+  string id = 1;         // Идентификатор комментария
+  string author_id = 2;  // Идентификатор автора (для проверки прав)
+  string content = 3;    // Новое содержимое комментария
+}
+
