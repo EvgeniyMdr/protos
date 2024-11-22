@@ -28,7 +28,7 @@ message CommentDto {
   string content = 4;        // Текст комментария
   google.protobuf.Timestamp createdAt = 5;  // Время создания комментария
   google.protobuf.Timestamp updatedAt = 6;  // Время обновления комментария
-  string parent_id = 7;      // Идентификатор родительского комментария
+  optional string parent_id = 7;      // Идентификатор родительского комментария
   int32 child_count = 8;     // Количество дочерних комментариев
 }
 
