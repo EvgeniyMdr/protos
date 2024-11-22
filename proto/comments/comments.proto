@@ -46,6 +46,8 @@ message GetChildCommentsDto {
 
 message CommentsResponse {
   repeated CommentDto comments = 1;  // Список комментариев
+  int32 total = 2;                   // Общее количество комментариев
+  int32 skip = 3;                  // Количество пропущенных коментариев
 }
 
 message DeleteCommentDto {
